@@ -1,25 +1,30 @@
-const installButton = document.getElementById('installButton');
-
-window.addEventListener("beforeinstallprompt", prompt);
+const buttonInstall = document.getElementById('installButton');
 
 
-function prompt() {
-    window.addEventListener("beforeinstallprompt", (beforeInstallPromptEvent) => {
-        // Previene que el prompt se muestre inmediatamente
-        // beforeInstallPromptEvent.preventDefault(); 
-      
-        // Evento para el botón de instalar
-        installButton.addEventListener("click", () => {
-          // you should not use the MouseEvent here, obviously
-        beforeInstallPromptEvent.prompt();
-    
-        // Promise que resuelve que eligió el usuario, instalar o cancelar.
-        beforeInstallPromptEvent.userChoice
-          .then(respuesta => console.log(respuesta))
-          .catch(error => console.log(error))
-        });
-      })
-}
+// https://web.dev/i18n/es/customize-install/
+
+let eventoPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Previene a la mini barra de información que aparezca en smartphones
+//   e.preventDefault();
+  // Guarda el evento para que se dispare más tarde
+  eventoPrompt = e;
+
+  // De manera opcional, envía el evento de analíticos para saber si se mostró la promoción a a instalación del PWA
+  console.log(`'beforeinstallprompt' se está ejecutando...`);
+});
+
+buttonInstall.addEventListener('click', async () => {
+    // Muestre el mensaje de instalación
+    eventoPrompt.prompt();
+    // Espera a que el usuario responda al mensaje
+    const { outcome } = await eventoPrompt.userChoice;
+    // De manera opcional, envía analíticos del resultado que eligió el usuario
+    console.log(`User response to the install prompt: ${outcome}`);
+    // Como ya usamos el mensaje, no lo podemos usar de nuevo, este es descartado
+    eventoPrompt = null;
+  });
 
 
 // Constructroes
@@ -165,7 +170,6 @@ const ui = new UI();
 
 document.addEventListener('DOMContentLoaded', () => {
     ui.llenarOpciones();            // Llena el select con los años
-    prompt();
 } );
 
 listeners();
