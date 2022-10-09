@@ -7,18 +7,18 @@
 // Instalando el service Worker. Solo se ejecuta una vez, buen lugar para cachear 
 self.addEventListener('install', function(e) {
     console.log('Se instaló correctamente');
-    console.log(e);
+    // console.log(e);
 })
 
 // Se ejecuta cuando se activa, es un buen lugar para nuevas versiones
 self.addEventListener('activate', function(e) {
     console.log('Se activó correctamente');
-    console.log(e);
+    // console.log(e);
 })
 
 // Fetch para descargar archivos estáticos
 self.addEventListener('fetch', function(e) {
     console.log('Fetch');
-    console.log(e);
+    // console.log(e);
 })
 

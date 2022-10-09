@@ -1,18 +1,27 @@
 const installButton = document.getElementById('installButton');
 
-window.addEventListener("beforeinstallprompt", (beforeInstallPromptEvent) => {
-    // Previene que el prompt se muestre inmediatamente
-    beforeInstallPromptEvent.preventDefault(); 
-  
-    // Evento para el botón de instalar
-    installButton.addEventListener("click", () => {
-      // you should not use the MouseEvent here, obviously
-      beforeInstallPromptEvent.prompt();
-    });
-  
-    installButton.hidden = false; // Make button operable
-  });
-  
+window.addEventListener("beforeinstallprompt", prompt);
+
+
+function prompt() {
+    window.addEventListener("beforeinstallprompt", (beforeInstallPromptEvent) => {
+        // Previene que el prompt se muestre inmediatamente
+        // beforeInstallPromptEvent.preventDefault(); 
+      
+        // Evento para el botón de instalar
+        installButton.addEventListener("click", () => {
+          // you should not use the MouseEvent here, obviously
+        beforeInstallPromptEvent.prompt();
+    
+        // Promise que resuelve que eligió el usuario, instalar o cancelar.
+        beforeInstallPromptEvent.userChoice
+          .then(respuesta => console.log(respuesta))
+          .catch(error => console.log(error))
+        });
+      })
+}
+
+
 // Constructroes
 
 function Seguro(marca, year, tipo) {
@@ -156,6 +165,7 @@ const ui = new UI();
 
 document.addEventListener('DOMContentLoaded', () => {
     ui.llenarOpciones();            // Llena el select con los años
+    prompt();
 } );
 
 listeners();
