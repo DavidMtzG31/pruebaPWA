@@ -1,0 +1,13 @@
+1- Crear un manifest.json en la raíz del proyecto.
+
+2- Crear el archivo para el ServiceWorker en la raíz del proyecto.
+
+3. El archivo que servirá para comprobar si el navegador es compatible con el SW y a su vez lo regis-
+   trará, estará en la carpeta de los demás archivos js
+
+2. Dentro del archivo del serviceWorker, haremos install y activate
+Install lo instala, dentro de, es buen lugar para cachear archivos
+Activate lo activa, es buen lugar para nuevas versiones de. SW
+
+3. Hacer la PWA instalable, debe tener un manifest, un servidor https, y hacer fetch
+   Al hacer fetch desde ese momento la app ya es instalable
